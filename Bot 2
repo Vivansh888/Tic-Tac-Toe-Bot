@@ -1,0 +1,202 @@
+import random
+grid=[]
+#Sets up grid
+for i in range(3):
+    row=[]
+    for j in range(3):
+        row.append(" ")
+    grid.append(row) 
+#Function to print grid      
+def printgrid(grid):
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            if j<2:
+                print(" "+grid[i][j]+ " |", end="")
+            else:
+                print(" "+ grid[i][j]+ " ")
+        if i<2:
+            print("---+---+---")
+printgrid(grid)
+#Sets up who goes first
+end=False
+select=int(input("Player 1 picks 1 or 2: "))
+decide=random.randint(1,2)
+p1="x"
+p2="o"
+if select==decide:
+    print("Player 1 is x")
+    p1="x"
+    p2="o"
+else:
+    print("Computer is x")
+    p1="o"
+    p2="x"
+first="p1"
+second="computer"
+if p1=="x":
+    first="p1"
+    second="computer"
+if p2=="x":
+    first="computer"
+    second="p1"
+#Puts the letters in their respective spots
+def checkwin(grid):
+    for i in range(3):
+            if grid[i][0]==grid[i][1]==grid[i][2]:
+                if grid[i][0]=="x":
+                    return "x"
+                
+                elif grid[i][0]=="o":
+                    return "o"
+    for i in range(3):
+        if grid[0][i]==grid[1][i]==grid[2][i]:
+            if grid[0][i]=="x":
+                return "x"
+               
+            elif grid[0][i]=="o":
+                return "o"
+              
+    if grid[0][0]==grid[1][1]==grid[2][2]:
+        if grid[0][0]=="x":
+            return "x"
+         
+        elif grid[0][0]=="o":
+            return "o"
+        
+    elif grid[2][0]==grid[1][1]==grid[0][2]:
+        if grid[2][0]=="x":
+            return "x"
+   
+        elif grid[2][0]=="o":
+            return "o"
+       
+    gcount=0
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            if grid[i][j]!=" ":
+                gcount+=1
+    if gcount==9:
+        return "t"
+    return"n"
+def aibrain3(grid, symb):
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            if grid[i][j]==" ":
+                grid[i][j]=symb
+                if checkwin(grid)==symb:
+                    return
+                else:
+                    grid[i][j]=" "
+    if grid[1][1]==" ":
+        grid[1][1]=symb
+    elif grid[0][0]==" ":
+        grid[0][0]=symb
+    elif grid[0][2]==" ":
+        grid[0][2]=symb
+    elif grid[2][0]==" ":
+        grid[2][0]=symb
+    elif grid[2][2]==" ":
+        grid[2][2]=symb
+    else:
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                if grid[i][j]==" ":
+                    grid[i][j]=symb
+while True:
+    #Puts the letters in their respective spots
+    if p1=="x":
+        dinput="invalid"
+        while dinput=="invalid":
+            ddinput=input("Where would you like to place their letter (x,y)(Ex-1,2): ")
+            firstcoor=ddinput.split(",")
+            y=int(firstcoor[1])-1
+            x=int(firstcoor[0])-1
+            if grid[y][x]==" ":
+                dinput="valid"
+                grid[y][x]="x"
+            elif y>4 or x>4:
+                print("invalid")
+            else:
+                print("invalid")
+    else:
+        aibrain3(grid, p2)
+    printgrid(grid) 
+    if second=="p2":
+        second="ai"
+    print(checkwin(grid))
+    if checkwin(grid)=="x":
+        print(first + " won")
+        break
+    elif checkwin(grid)=="o":
+        print(second + " won")
+        break
+    elif checkwin(grid)=="t":
+        print("It is a tie")
+        break
+    
+    for i in range(3):
+        if grid[i][0]==grid[i][1]==grid[i][2]:
+            if grid[i][0]=="x":
+                print(first + " wins")
+            
+            elif grid[i][0]=="o":
+                print(second + " wins")
+                                   
+    if checkwin(grid)=="x":
+        print(first + " won")
+        break
+    elif checkwin(grid)=="o":
+        print(second + " won")
+        break
+    elif checkwin(grid)=="t":
+        print("It is a tie")
+        break
+
+
+    if p1=="o":
+        dinput="invalid"
+        while dinput=="invalid":
+            ddinput=input("Where would you like to place their letter (x,y)(Ex-1,2): ")
+            secondcoor=ddinput.split(",")
+            y=int(secondcoor[1])-1
+            x=int(secondcoor[0])-1
+            if grid[y][x]==" ":
+                dinput="valid"
+                grid[y][x]="o"
+            elif y>4 or x>4:
+                print("invalid")
+            else:
+                print("invalid")
+    else:
+        aibrain3(grid, p2)
+    printgrid(grid)
+    if second=="p2":
+        second="ai"
+    print(checkwin(grid))
+    if checkwin(grid)=="x":
+        print(first + " won")
+        break
+    elif checkwin(grid)=="o":
+        print(second + " won")
+        break
+    elif checkwin(grid)=="t":
+        print("It is a tie")
+        break
+    
+    for i in range(3):
+        if grid[i][0]==grid[i][1]==grid[i][2]:
+            if grid[i][0]=="x":
+                print(first + " wins")
+            
+            elif grid[i][0]=="o":
+                print(second + " wins")
+                                   
+    if checkwin(grid)=="x":
+        print(first + " won")
+        break
+    elif checkwin(grid)=="o":
+        print(second + " won")
+        break
+    elif checkwin(grid)=="t":
+        print("It is a tie")
+        break
